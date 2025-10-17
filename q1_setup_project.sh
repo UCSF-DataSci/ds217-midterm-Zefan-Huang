@@ -1,17 +1,29 @@
-# TODO: Add shebang line: #!/bin/bash
-# Assignment 5, Question 1: Project Setup Script
-# This script creates the directory structure for the clinical trial analysis project
-# TODO: Make this script executable (if not already)
-# chmod +x q1_setup_project.sh
 
-# TODO: Create the following directories:
-#   - data/
-#   - output/
-#   - reports/
+#!/bin/bash
 
-# TODO: Generate the dataset
-#       Run: python3 generate_data.py
-#       This creates data/clinical_trial_raw.csv with 10,000 patients
+set -e 
 
-# TODO: Save the directory structure to reports/directory_structure.txt
-#       Hint: Use 'ls -la' or 'tree' command
+echo "Setting up project directories..."
+
+ROOT_DIR=$(pwd)
+
+mkdir -p "$ROOT_DIR/data"\
+         "$ROOT_DIR/output" \
+         "$ROOT_DIR/reports"
+
+echo "Directories created: data/, output/, reports/"
+
+echo "Generating dataset...in"
+echo "3"
+sleep 1
+echo "2"
+sleep 1
+echo "1"
+sleep 1
+
+python3 generate_data.py
+echo "Dataset generated: data/clinical_trial_raw.csv"
+
+tree "$ROOT_DIR" > "$ROOT_DIR/reports/directory_structure.txt"
+
+echo "Directory structure saved to reports/directory_structure.txt"

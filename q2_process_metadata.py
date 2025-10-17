@@ -1,7 +1,7 @@
-# TODO: Add shebang line: #!/usr/bin/env python3
+#!/usr/bin/env python3
 # Assignment 5, Question 2: Python Data Processing
 # Process configuration files for data generation.
-
+import random
 
 def parse_config(filepath: str) -> dict:
     """
@@ -18,8 +18,14 @@ def parse_config(filepath: str) -> dict:
         >>> config['sample_data_rows']
         '100'
     """
-    # TODO: Read file, split on '=', create dict
-    pass
+    config = {}
+    with open(filepath, 'r') as file:
+        for line in file:
+            line = line.strip()
+            if line and '=' in line:
+                key, value = line.split('=', 1)
+                config[key.strip()] = value.strip()
+    return config
 
 
 def validate_config(config: dict) -> dict:
@@ -43,8 +49,31 @@ def validate_config(config: dict) -> dict:
         >>> results['sample_data_rows']
         True
     """
-    # TODO: Implement with if/elif/else
-    pass
+    result = {}
+    if 'sample_data_rows' in config:
+        if config['sample_data_rows'].isdigit() and int(config['sample_data_rows']) > 0:
+            result['sample_data_rows'] = True
+        else:
+            result['sample_data_rows'] = False
+    else:
+        result['sample_data_rows'] = False
+    
+    if 'sample_data_min' in config:
+        if config['sample_data_min'].isdigit() and int(config['sample_data_min']) >= 1:
+            result['sample_data_min'] = True
+        else:
+            result['sample_data_min'] = False
+    else:
+        result['sample_data_min'] = False
+    if 'sample_data_max' in config and 'sample_data_min' in config:
+        if (config['sample_data_max'].isdigit() and 
+            int(config['sample_data_max']) > int(config['sample_data_min'])):
+            result['sample_data_max'] = True
+        else:
+            result['sample_data_max'] = False
+    else:
+        result['sample_data_max'] = False
+    return result
 
 
 def generate_sample_data(filename: str, config: dict) -> None:
@@ -66,10 +95,14 @@ def generate_sample_data(filename: str, config: dict) -> None:
         >>> import random
         >>> random.randint(18, 75)  # Returns random integer between 18-75
     """
-    # TODO: Parse config values (convert strings to int)
-    # TODO: Generate random numbers and save to file
-    # TODO: Use random module with config-specified range
-    pass
+    rows = int(config.get('sample_data_rows', 0))
+    min_val = int(config.get('sample_data_min', 0))
+    max_val = int(config.get('sample_data_max', 0))
+    
+    with open(filename, 'w') as f:
+        for _ in range(rows):
+            number = random.randint(min_val, max_val)
+            f.write(f"{number}\n")
 
 
 def calculate_statistics(data: list) -> dict:
@@ -87,8 +120,21 @@ def calculate_statistics(data: list) -> dict:
         >>> stats['mean']
         30.0
     """
-    # TODO: Calculate stats
-    pass
+    result = []
+    for i in data:
+        result.append(int(i))
+    total = sum(result)
+    count = len(result)
+    mean = sum(result) / len(result)
+    sorted_result = sorted(result)
+    if len(result) % 2 == 0:
+         median = (sorted_result[len(result) // 2 - 1] + sorted_result[len(result) // 2]) / 2
+    else:
+        median = sorted(result)[len(result) // 2]
+
+    total = sum(result)
+    count = len(result)
+    return {'mean': mean, 'median': median, 'sum': total, 'count': count}
 
 
 if __name__ == '__main__':
@@ -98,6 +144,12 @@ if __name__ == '__main__':
     # validation = validate_config(config)
     # generate_sample_data('data/sample_data.csv', config)
     # 
-    # TODO: Read the generated file and calculate statistics
-    # TODO: Save statistics to output/statistics.txt
-    pass
+    config = parse_config('q2_config.txt')
+    validation = validate_config(config)
+    generate_sample_data('data/sample_data.csv', config)
+    with open('data/sample_data.csv', 'r') as f:
+        data = f.readlines()
+    stats = calculate_statistics(data)
+    with open('output/statistics.txt', 'w') as f:
+        for key, value in stats.items():
+            f.write(f"{key}: {value}\n")
