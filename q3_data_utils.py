@@ -92,8 +92,7 @@ def fill_missing(df: pd.DataFrame, column: str, strategy: str = 'mean') -> pd.Da
         df[column] = df[column].fillna(fill_value)
     elif strategy == 'ffill':
         df[column] = df[column].fillna(method='ffill')
-    else:
-        raise ValueError("Unsupported strategy. Use 'mean', 'median', or 'ffill'.")
+
     return df
 
 
@@ -142,8 +141,6 @@ def filter_data(df: pd.DataFrame, filters: list) -> pd.DataFrame:
             df = df[(df[col] >= val[0]) & (df[col] <= val[1])]
         elif cond == 'in_list':
             df = df[df[col].isin(val)]
-        else:
-            raise ValueError("Unsupported condition. Use 'equals', 'greater_than', 'less_than', 'in_range', or 'in_list'.")
     return df
 
 
