@@ -4,7 +4,7 @@
 import random
 import os
 import statistics
-from typing import List, Dict, Any
+from typing import List, Any, Dict
 
 def parse_config(filepath: str) -> dict:
     """
@@ -87,21 +87,5 @@ def calculate_statistics(data: List[Any]) -> Dict[str, Any]:
     return {'mean': mean, 'median': median, 'sum': total, 'count': count}
 
 if __name__ == '__main__':
-    # Quick CLI: parse config and generate sample data for grading
-    import os
-    
-    cfg_path = 'q2_config.txt'
-    if os.path.exists(cfg_path):
-        cfg = parse_config(cfg_path)
-        validation = validate_config(cfg)
-
-        if all(validation.values()):
-            os.makedirs('data', exist_ok=True)
-            generate_sample_data('data/sample_data.csv', cfg)
-            print("Generated data/sample_data.csv")
-        else:
-            print("Invalid config:", validation)
-    else:
-        # Demo run (safe numeric example)
-        sample = [10, 20, 30, 40, 50]
-        print(calculate_statistics(sample))
+    sample = [10, 20, 30, 40, 50]
+    print(calculate_statistics(sample))
