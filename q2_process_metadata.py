@@ -88,16 +88,20 @@ def calculate_statistics(data: List[Any]) -> Dict[str, Any]:
 
 if __name__ == '__main__':
     # Quick CLI: parse config and generate sample data for grading
+    import os
+    
     cfg_path = 'q2_config.txt'
     if os.path.exists(cfg_path):
         cfg = parse_config(cfg_path)
         validation = validate_config(cfg)
+
         if all(validation.values()):
+            os.makedirs('data', exist_ok=True)
             generate_sample_data('data/sample_data.csv', cfg)
             print("Generated data/sample_data.csv")
         else:
             print("Invalid config:", validation)
     else:
-        # Demo run
-        sample = ['10', '20', '30', '40', '50']
+        # Demo run (safe numeric example)
+        sample = [10, 20, 30, 40, 50]
         print(calculate_statistics(sample))
