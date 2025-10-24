@@ -1,0 +1,59 @@
+Q7 Key Findings:
+
+Mean CVD Rate by Intervention Group:
+intervention_group
+  CONTROL           0.357143
+  Contrl            0.342466
+  Control           0.326316
+  TREATMENT A       0.307692
+  TREATMENT B       0.385542
+  Treatmen A        0.316667
+  Treatment  B      0.312500
+  Treatment A       0.272727
+  Treatment B       0.336538
+  TreatmentA        0.257576
+  control           0.337349
+  treatment a       0.388060
+  treatment b       0.366667
+CONTROL             0.331469
+Contrl              0.344140
+Control             0.320905
+TREATMENT A         0.325175
+TREATMENT B         0.348226
+Treatmen A          0.319257
+Treatment  B        0.310526
+Treatment A         0.344262
+Treatment B         0.335616
+TreatmentA          0.300787
+control             0.347411
+treatment a         0.314626
+treatment b         0.332000
+
+Mean Adherence % by Intervention Group:
+intervention_group
+  CONTROL           58.705882
+  Contrl            61.263158
+  Control           61.361446
+  TREATMENT A       57.296296
+  TREATMENT B       62.171053
+  Treatmen A        60.566038
+  Treatment  B      59.740741
+  Treatment A       61.358491
+  Treatment B       58.872093
+  TreatmentA        58.528302
+  control           63.955882
+  treatment a       60.169811
+  treatment b       65.702703
+CONTROL             60.623140
+Contrl              59.854015
+Control             61.156250
+TREATMENT A         60.522634
+TREATMENT B         60.360656
+Treatmen A          59.771203
+Treatment  B        60.931715
+Treatment A         61.347826
+Treatment B         61.385484
+TreatmentA          59.295749
+control             60.603200
+treatment a         60.474104
+treatment b         61.120444
