@@ -1,4 +1,4 @@
-mean: 43.07
-median: 40.0
-sum: 4307
+mean: 44.03
+median: 42.5
+sum: 4403
 count: 100
