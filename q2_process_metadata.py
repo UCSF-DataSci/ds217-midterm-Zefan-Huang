@@ -144,12 +144,5 @@ if __name__ == '__main__':
     # validation = validate_config(config)
     # generate_sample_data('data/sample_data.csv', config)
     # 
-    config = parse_config('q2_config.txt')
-    validation = validate_config(config)
-    generate_sample_data('data/sample_data.csv', config)
-    with open('data/sample_data.csv', 'r') as f:
-        data = f.readlines()
-    stats = calculate_statistics(data)
-    with open('output/statistics.txt', 'w') as f:
-        for key, value in stats.items():
-            f.write(f"{key}: {value}\n")
+    sample = ['10', '20', '30', '40', '50']
+    print(calculate_statistics(sample))
