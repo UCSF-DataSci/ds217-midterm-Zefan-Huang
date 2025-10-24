@@ -3,6 +3,7 @@
 # Process configuration files for data generation.
 import random
 
+
 def parse_config(filepath: str) -> dict:
     """
     Parse key=value config file into a dict.
@@ -15,6 +16,7 @@ def parse_config(filepath: str) -> dict:
                 key, value = line.split('=', 1)
                 config[key.strip()] = value.strip()
     return config
+
 
 def validate_config(config: dict) -> dict:
     """
@@ -44,7 +46,7 @@ def validate_config(config: dict) -> dict:
 
     if 'sample_data_max' in config and 'sample_data_min' in config:
         if (str(config['sample_data_max']).isdigit() and
-            int(config['sample_data_max']) > int(config['sample_data_min'])):
+                int(config['sample_data_max']) > int(config['sample_data_min'])):
             result['sample_data_max'] = True
         else:
             result['sample_data_max'] = False
@@ -52,6 +54,7 @@ def validate_config(config: dict) -> dict:
         result['sample_data_max'] = False
 
     return result
+
 
 def _ensure_dir_for_file(filename: str) -> None:
     """
@@ -64,6 +67,7 @@ def _ensure_dir_for_file(filename: str) -> None:
     if not dirpath or dirpath == '.':
         return
     os_mod = __import__('os')
+    # correct call is os.makedirs
     os_mod.makedirs(dirpath, exist_ok=True)
 
 
@@ -82,6 +86,7 @@ def generate_sample_data(filename: str, config: dict) -> None:
         for _ in range(rows):
             number = random.randint(min_val, max_val)
             f.write(f"{number}\n")
+
 
 def _median_from_list(nums):
     """Return median of a list of numbers as float."""
@@ -110,7 +115,23 @@ def calculate_statistics(data) -> dict:
     median = _median_from_list(nums)
     return {'mean': mean, 'median': median, 'sum': total, 'count': count}
 
+
 if __name__ == '__main__':
-    sample = [10, 20, 30, 40, 50]
-    print(calculate_statistics(sample))
-    
+    # Optional: read config and produce outputs if run directly
+    try:
+        cfg = parse_config('q2_config.txt')
+        validation = validate_config(cfg)
+        if all(validation.values()):
+            generate_sample_data('data/sample_data.csv', cfg)
+            with open('data/sample_data.csv') as f:
+                values = [int(line.strip()) for line in f if line.strip()]
+            stats = calculate_statistics(values)
+            # Ensure output dir exists
+            _ensure_dir_for_file('output/statistics.txt')
+            with open('output/statistics.txt', 'w') as out:
+                out.write('\n'.join([f"{k}: {v}" for k, v in stats.items()]))
+        else:
+            print('Invalid configuration; no files generated.')
+    except FileNotFoundError:
+        # If config or data dir is absent, do nothing when executed
+        pass
