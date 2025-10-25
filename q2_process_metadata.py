@@ -2,13 +2,9 @@
 # Assignment 5, Question 2: Python Data Processing
 # Process configuration files for data generation.
 import random
-import os
 
 
 def parse_config(filepath: str) -> dict:
-    """
-    Parse config file (key=value format) into dictionary.
-    """
     config = {}
     with open(filepath, 'r') as file:
         for line in file:
@@ -20,9 +16,6 @@ def parse_config(filepath: str) -> dict:
 
 
 def validate_config(config: dict) -> dict:
-    """
-    Validate configuration values using if/elif/else logic.
-    """
     result = {}
 
     if 'sample_data_rows' in config:
@@ -54,11 +47,6 @@ def validate_config(config: dict) -> dict:
 
 
 def generate_sample_data(filename: str, config: dict) -> None:
-    """
-    Generate a file with random numbers, one number per row with no header.
-    """
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
-
     rows = int(config.get('sample_data_rows', 0))
     min_val = int(config.get('sample_data_min', 0))
     max_val = int(config.get('sample_data_max', 0))
@@ -70,9 +58,6 @@ def generate_sample_data(filename: str, config: dict) -> None:
 
 
 def calculate_statistics(data: list) -> dict:
-    """
-    Calculate basic statistics: mean, median, sum, count.
-    """
     nums = [int(x) for x in data]
     nums.sort()
 
@@ -105,10 +90,10 @@ if __name__ == '__main__':
 
     stats = calculate_statistics(data)
 
-    os.makedirs('output', exist_ok=True)
     with open('output/statistics.txt', 'w') as f:
         for key, value in stats.items():
             f.write(f"{key}: {value}\n")
 
     print("Statistics saved to output/statistics.txt")
+
 
