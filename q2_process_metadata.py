@@ -117,21 +117,22 @@ def calculate_statistics(data) -> dict:
 
 
 if __name__ == '__main__':
-    # Optional: read config and produce outputs if run directly
-    try:
-        cfg = parse_config('q2_config.txt')
-        validation = validate_config(cfg)
-        if all(validation.values()):
-            generate_sample_data('data/sample_data.csv', cfg)
-            with open('data/sample_data.csv') as f:
-                values = [int(line.strip()) for line in f if line.strip()]
-            stats = calculate_statistics(values)
-            # Ensure output dir exists
-            _ensure_dir_for_file('output/statistics.txt')
-            with open('output/statistics.txt', 'w') as out:
-                out.write('\n'.join([f"{k}: {v}" for k, v in stats.items()]))
-        else:
-            print('Invalid configuration; no files generated.')
-    except FileNotFoundError:
-        # If config or data dir is absent, do nothing when executed
-        pass
+
+    config = parse_config('q2_config.txt')
+
+    validation = validate_config(config)
+    print("Validation:", validation)
+
+    if not all(validation.values()):
+        print("Config invalid. Please fix config and rerun.")
+        exit(1)
+
+    output_file = 'sample_data.txt'
+    generate_sample_data(output_file, config)
+    print(f"Generated: {output_file}")
+
+    with open(output_file, 'r') as f:
+        data = f.read().splitlines()
+
+    stats = calculate_statistics(data)
+    print("Stats:", stats)
